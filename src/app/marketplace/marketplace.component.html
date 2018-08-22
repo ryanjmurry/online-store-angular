@@ -5,6 +5,9 @@
     <div *ngIf="currentRoute === '/admin'">
       {{album.description}}
       <hr>
-      <app-edit-album [selectedAlbum]="album"></app-edit-album>
+      <button (click)="editAlbumClickedToggle(album)">Edit</button>
     </div>
+</div>
+<div *ngIf="editAlbumClicked">
+  <app-edit-album [selectedAlbum]="selectedAlbumToEdit"></app-edit-album>
 </div>

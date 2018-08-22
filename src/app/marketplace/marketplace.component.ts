@@ -13,6 +13,8 @@ import { FirebaseListObservable } from 'angularfire2/database';
 export class MarketplaceComponent implements OnInit {
   albums: FirebaseListObservable<any[]>;
   currentRoute: string = this.router.url;
+  editAlbumClicked: boolean = false;
+  selectedAlbumToEdit;
 
   constructor(private router: Router, private albumService: AlbumService){}
 
@@ -22,5 +24,10 @@ export class MarketplaceComponent implements OnInit {
 
   goToDetailPage(clickedAlbum: Album) {
     this.router.navigate(['albums', clickedAlbum.$key])
+  }
+
+  editAlbumClickedToggle(albumToEdit) {
+    this.editAlbumClicked = !this.editAlbumClicked;
+    this.selectedAlbumToEdit = albumToEdit;
   }
 }
