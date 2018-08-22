@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { Album } from '../models/album.model';
 import { AlbumService } from '../album.service';
-import { FirebaseListObservable } from 'angularfire2/database'; 
+import { FirebaseListObservable } from 'angularfire2/database';
 
 @Component({
   selector: 'app-album-detail',
@@ -13,7 +13,7 @@ import { FirebaseListObservable } from 'angularfire2/database';
 })
 export class AlbumDetailComponent implements OnInit {
   albumId: string;
-  albumToDisplay;
+  albumToDisplay: Album;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +25,12 @@ export class AlbumDetailComponent implements OnInit {
     this.route.params.forEach((urlParameters) => {
       this.albumId = urlParameters['id'];
     });
-    this.albumToDisplay = this.albumService.getAlbumById(this.albumId);
+    this.albumService.getAlbumById(this.albumId).subscribe(dataLastEmittedFromObserver => {
+      this.albumToDisplay = new Album(dataLastEmittedFromObserver.title,
+                                      dataLastEmittedFromObserver.artist,
+                                      dataLastEmittedFromObserver.description)
+
+      console.log(this.albumToDisplay);
+    });
   }
 }
